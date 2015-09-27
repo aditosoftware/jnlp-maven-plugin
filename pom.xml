@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.adito.maven</groupId>
+  <artifactId>jnlp-maven-plugin</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>maven-plugin</packaging>
+  <name>jnlp-maven-plugin Maven Mojo</name>
+
+  <description>a maven plugin for jnlp file creation</description>
+
+
+  <organization>
+    <name>ADITO Software GmbH</name>
+    <url>http://www.adito.de</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <name>Johannes Boesl</name>
+      <id>jboesl</id>
+      <email>j.boesl@adito.de</email>
+      <timezone>1</timezone>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>https://github.com/jboesl/jnlp-maven-plugin.git</connection>
+    <developerConnection>git@github.com:jboesl/jnlp-maven-plugin.git</developerConnection>
+    <url>https://github.com/jboesl/jnlp-maven-plugin</url>
+  </scm>
+
+  <issueManagement>
+    <url>https://github.com/jboesl/jnlp-maven-plugin/issues</url>
+    <system>github</system>
+  </issueManagement>
+
+
+  <distributionManagement>
+    <repository>
+      <id>adito.m2</id>
+      <name>releases</name>
+      <url>${repository.releases}</url>
+    </repository>
+    <snapshotRepository>
+      <id>adito.m2</id>
+      <name>snapshots</name>
+      <url>${repository.snapshots}</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
+
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>3.3.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-core</artifactId>
+      <version>3.3.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven.plugin-tools</groupId>
+      <artifactId>maven-plugin-annotations</artifactId>
+      <version>3.4</version>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
+
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.10</version>
+      </plugin>
+
+      <plugin>
+        <groupId>de.adito.maven</groupId>
+        <artifactId>jnlp-maven-plugin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <configuration>
+          <format>$(artifactId)__V$(version).$(type)</format>
+          <templateFormat>&lt;jnlp url="$(format)"/></templateFormat>
+          <customTemplateFormats>
+            <property>
+              <name>org.apache.maven:maven-plugin-api</name>
+              <value>&lt;jnlp url="$(format)" main="some.pkg.and.some.class"/></value>
+            </property>
+          </customTemplateFormats>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <useDefaultManifestFile>true</useDefaultManifestFile>
+          <archive>
+            <manifest>
+              <useUniqueVersions>true</useUniqueVersions>
+              <addClasspath>true</addClasspath>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>
+    </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-plugin-plugin</artifactId>
+          <version>3.4</version>
+          <configuration>
+            <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+          </configuration>
+          <executions>
+            <execution>
+              <id>mojo-descriptor</id>
+              <phase>process-classes</phase>
+              <goals>
+                <goal>descriptor</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+  </build>
+
+</project>

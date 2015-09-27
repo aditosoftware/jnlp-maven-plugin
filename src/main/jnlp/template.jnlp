@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://localhost" href="template.jnlp">
+  <information>
+    <vendor>ADITO Software GmbH</vendor>
+    <homepage href="http://localhost/" />
+    <description>jnlp test</description>
+  </information>
+  <security>
+    <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.7+" href="http://java.sun.com/products/autodl/j2se"/>
+    $(dependencies)
+  </resources>
+</jnlp>
