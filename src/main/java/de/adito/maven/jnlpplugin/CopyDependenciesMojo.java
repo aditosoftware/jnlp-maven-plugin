@@ -2,18 +2,16 @@ package de.adito.maven.jnlpplugin;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.plugins.annotations.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.io.*;
+import java.nio.file.*;
 import java.util.Set;
 
 /**
+ * Copies all dependencies to a folder. In contrast to 'copy-dependency-plugin' you can define the format for each file
+ * and you can define exclusions.
+ *
  * @author PaL
  *         Date: 25.09.15
  *         Time: 02:20

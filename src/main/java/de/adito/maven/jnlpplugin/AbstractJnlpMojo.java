@@ -5,11 +5,11 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
+ * Holds common properties shared between CopyDependenciesMojo and FillTemplateMojo.
+ *
  * @author bo
  *         Date: 27.09.15
  *         Time: 00:01
@@ -27,14 +27,23 @@ abstract class AbstractJnlpMojo extends AbstractMojo
   @Parameter(defaultValue = "${project}", readonly = true)
   private MavenProject project;
 
+  /**
+   * A list with 'groupId:artifactId' to specify which dependencies should be excluded.
+   */
   @Parameter
   private List<String> exclusions;
 
+  /**
+   * The directory in which new files are crated in.
+   */
   @Parameter(defaultValue = "${project.build.directory}/jnlp")
   private String outputDirectory;
 
   /**
-   * Variables are: '$(groupId)', '$(artifactId)', '$(version)', '$(type)' and '$(classifier)'
+   * Describes the format that is used to write out dependencies.<br/>
+   * Variables are: '$(groupId)', '$(artifactId)', '$(version)', '$(type)' and '$(classifier)'.<br/>
+   * Remember you have to quote some characters in xml to be able to use it. E.g. to use a <b><</b> (lesser than) sign
+   * you have to use <b>&amp;lt;</b> in xml.
    */
   @Parameter(defaultValue = "$(artifactId)-$(version).$(type)")
   private String format;
@@ -51,7 +60,6 @@ abstract class AbstractJnlpMojo extends AbstractMojo
     }
     return artifacts;
   }
-
 
 
   String getArtifactFileName(Artifact pArtifact)
