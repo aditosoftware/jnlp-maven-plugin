@@ -1,3 +1,7 @@
+# jnlp-maven-plugin
+[![Build Status](https://travis-ci.org/jboesl/jnlp-maven-plugin.svg?branch=master)](https://travis-ci.org/jboesl/jnlp-maven-plugin)
+
+
 Overview
 --------
 This plugin lets you copy all dependencies to a directory by using the 'copy-dependencies' goal . In contrast to 
