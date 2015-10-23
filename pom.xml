@@ -5,7 +5,7 @@
 
   <groupId>de.adito.maven</groupId>
   <artifactId>jnlp-maven-plugin</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <packaging>maven-plugin</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>
@@ -93,16 +93,17 @@
       </plugin>
 
       <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.10</version>
-      </plugin>
-
-      <plugin>
         <groupId>de.adito.maven</groupId>
         <artifactId>jnlp-maven-plugin</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
         <configuration>
           <format>$(artifactId)__V$(version).$(type)</format>
+          <customFormats>
+            <property>
+              <name>com.google.guava:guava</name>
+              <value>$(artifactId)-$(version)-special.$(type)</value>
+            </property>
+          </customFormats>
           <templateFormat>&lt;jar href="$(format)"/></templateFormat>
           <customTemplateFormats>
             <property>

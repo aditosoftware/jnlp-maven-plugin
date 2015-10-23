@@ -48,6 +48,22 @@ abstract class AbstractJnlpMojo extends AbstractMojo
   @Parameter(defaultValue = "$(artifactId)-$(version).$(type)")
   private String format;
 
+  /**
+   * Special treatment for some 'dependencies'. You can describe the affected artifact with 'groupId:artifactId' and set
+   * a custom format for that artifact.<br/>
+   * For example:<br/>
+   * <pre>
+   * &lt;customFormats>
+   *   &lt;property>
+   *     &lt;name>org.apache.maven:maven-plugin-api</name>
+   *     &lt;value>$(artifactId)-$(version)-special.$(type)&lt;/value>
+   *   &lt;/property>
+   * &lt;/customFormats>
+   * </pre>
+   */
+  @Parameter
+  private Properties customFormats;
+
 
   Set<Artifact> getArtifacts()
   {
@@ -64,7 +80,10 @@ abstract class AbstractJnlpMojo extends AbstractMojo
 
   String getArtifactFileName(Artifact pArtifact)
   {
-    return getFormatArtifact(getFormat(), pArtifact);
+    String customFormat = getCustomFormats() == null ? null :
+        getCustomFormats().getProperty(pArtifact.getGroupId() + ":" + pArtifact.getArtifactId());
+
+    return getFormatArtifact(customFormat == null ? getFormat() : customFormat, pArtifact);
   }
 
   String getFormatArtifact(String pFormat, Artifact pArtifact)
@@ -95,5 +114,10 @@ abstract class AbstractJnlpMojo extends AbstractMojo
   String getFormat()
   {
     return format;
+  }
+
+  public Properties getCustomFormats()
+  {
+    return customFormats;
   }
 }

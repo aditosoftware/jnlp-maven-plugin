@@ -1,18 +1,13 @@
 package de.adito.maven.jnlpplugin;
 
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.*;
 import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.plugins.annotations.*;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Properties;
-import java.util.Set;
+import java.nio.file.*;
+import java.util.*;
 
 /**
  * Prints all dependencies to a template file.
@@ -56,17 +51,17 @@ public class FillTemplateMojo extends AbstractJnlpMojo
   private String templateFormat;
 
   /**
-   * Special treatment for some 'dependencies'. You can define the describe the affected artifact with
-   * 'groupId:artifactId' and set a custom template format for that artifact.<br/>
+   * Special treatment for some 'dependencies'. You can describe the affected artifact with 'groupId:artifactId' and set
+   * a custom template format for that artifact.<br/>
    * For example:<br/>
    * <pre>
-&lt;customTemplateFormats>
-  &lt;property>
-    &lt;name>org.apache.maven:maven-plugin-api</name>
-    &lt;value>&amp;lt;jnlp url="$(format)" main="some.pkg.and.some.class"/>&lt;/value>
-  &lt;/property>
-&lt;/customTemplateFormats>
-   </pre>
+   * &lt;customTemplateFormats>
+   *   &lt;property>
+   *     &lt;name>org.apache.maven:maven-plugin-api</name>
+   *     &lt;value>&amp;lt;jnlp url="$(format)" main="some.pkg.and.some.class"/>&lt;/value>
+   *   &lt;/property>
+   * &lt;/customTemplateFormats>
+   * </pre>
    */
   @Parameter
   private Properties customTemplateFormats;
