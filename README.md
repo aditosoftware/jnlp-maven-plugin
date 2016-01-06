@@ -1,5 +1,5 @@
 # jnlp-maven-plugin
-[![Build Status](https://travis-ci.org/jboesl/jnlp-maven-plugin.svg?branch=master)](https://travis-ci.org/jboesl/jnlp-maven-plugin)
+[![Build Status](https://travis-ci.org/aditosoftware/jnlp-maven-plugin.svg?branch=master)](https://travis-ci.org/aditosoftware/jnlp-maven-plugin)
 
 
 Overview
