@@ -21,7 +21,7 @@ Common usage
     <plugin>
       <groupId>de.adito.maven</groupId>
       <artifactId>jnlp-maven-plugin</artifactId>
-      <version>1.1.0</version>
+      <version>1.1.1</version>
       <configuration>
         <format>$(artifactId)__V$(version).$(type)</format>
         <templateFormat>&lt;jar href="$(format)"/></templateFormat>

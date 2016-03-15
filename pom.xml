@@ -5,7 +5,7 @@
 
   <groupId>de.adito.maven</groupId>
   <artifactId>jnlp-maven-plugin</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <packaging>maven-plugin</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>
@@ -95,7 +95,7 @@
       <plugin>
         <groupId>de.adito.maven</groupId>
         <artifactId>jnlp-maven-plugin</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
         <configuration>
           <format>$(artifactId)__V$(version).$(type)</format>
           <customFormats>
@@ -104,11 +104,11 @@
               <value>$(artifactId)-$(version)-special.$(type)</value>
             </property>
           </customFormats>
-          <templateFormat>&lt;jar href="$(format)"/></templateFormat>
+          <templateFormat>&lt;jar href="$(format)" size="$(size)"/></templateFormat>
           <customTemplateFormats>
             <property>
               <name>org.apache.maven:maven-plugin-api</name>
-              <value>&lt;jar href="$(format)" main="true"/></value>
+              <value>&lt;jar href="$(format)" size="$(size)" main="true"/></value>
             </property>
           </customTemplateFormats>
         </configuration>

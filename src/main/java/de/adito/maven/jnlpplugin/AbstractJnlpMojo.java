@@ -5,6 +5,8 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
+import java.io.IOException;
+import java.nio.file.*;
 import java.util.*;
 
 /**
@@ -41,7 +43,7 @@ abstract class AbstractJnlpMojo extends AbstractMojo
 
   /**
    * Describes the format that is used to write out dependencies.<br/>
-   * Variables are: '$(groupId)', '$(artifactId)', '$(version)', '$(type)' and '$(classifier)'.<br/>
+   * Variables are: '$(groupId)', '$(artifactId)', '$(version)', '$(type)', '$(size)' and '$(classifier)'.<br/>
    * Remember you have to quote some characters in xml to be able to use it. E.g. to use a <b><</b> (lesser than) sign
    * you have to use <b>&amp;lt;</b> in xml.
    */
@@ -67,7 +69,7 @@ abstract class AbstractJnlpMojo extends AbstractMojo
 
   Set<Artifact> getArtifacts()
   {
-    Set<Artifact> artifacts = new HashSet<>();
+    Set<Artifact> artifacts = new LinkedHashSet<>();
     for (Artifact artifact : project.getArtifacts())
     {
       String id = artifact.getGroupId() + ":" + artifact.getArtifactId();
@@ -94,6 +96,28 @@ abstract class AbstractJnlpMojo extends AbstractMojo
         .replaceAll(FORMAT_VERSION, pArtifact.getVersion())
         .replaceAll(FORMAT_TYPE, pArtifact.getType())
         .replaceAll(FORMAT_CLASSIFIER, pArtifact.getClassifier());
+  }
+
+  long getSize(Artifact pArtifact)
+  {
+    String artifactFileName = getArtifactFileName(pArtifact);
+    try
+    {
+      String outputDirectory = getOutputDirectory();
+      Path copiedArtifactPath = Paths.get(outputDirectory).resolve(artifactFileName);
+      if (Files.exists(copiedArtifactPath))
+        return Files.size(copiedArtifactPath);
+
+      // file might be stored as .pack.gz
+      copiedArtifactPath = Paths.get(outputDirectory).resolve(artifactFileName + ".pack.gz");
+      if (Files.exists(copiedArtifactPath))
+        return Files.size(copiedArtifactPath);
+    }
+    catch (IOException pE)
+    {
+      throw new RuntimeException(pE);
+    }
+    return pArtifact.getFile().length();
   }
 
   MavenProject getProject()

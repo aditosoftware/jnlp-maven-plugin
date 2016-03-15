@@ -21,6 +21,7 @@ public class FillTemplateMojo extends AbstractJnlpMojo
 {
 
   private static final String FORMAT_FORMAT = "\\$\\(format\\)";
+  private static final String FORMAT_SIZE = "\\$\\(size\\)";
   private static final String DEPENCIES_MAKRER = "\\$\\(dependencies\\)";
 
 
@@ -77,7 +78,8 @@ public class FillTemplateMojo extends AbstractJnlpMojo
       String customFormat = customTemplateFormats == null ? null :
           customTemplateFormats.getProperty(artifact.getGroupId() + ":" + artifact.getArtifactId());
       String entry = getFormatArtifact(customFormat == null ? templateFormat : customFormat, artifact)
-          .replaceAll(FORMAT_FORMAT, getArtifactFileName(artifact));
+          .replaceAll(FORMAT_FORMAT, getArtifactFileName(artifact))
+          .replaceAll(FORMAT_SIZE, String.valueOf(getSize(artifact)));
 
       if (dependencyBuilder.length() != 0)
         dependencyBuilder.append(_getSeparator());
