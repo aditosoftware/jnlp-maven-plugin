@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.adito.maven.test</groupId>
+  <artifactId>jnlp-maven-plugin-test-two</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+
+  <name>${project.groupId}:${project.artifactId}</name>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>de.adito.maven.test</groupId>
+      <artifactId>jnlp-maven-plugin-test-one</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>19.0</version>
+    </dependency>
+  </dependencies>
+
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>de.adito.maven</groupId>
+        <artifactId>jnlp-maven-plugin</artifactId>
+        <version>1.1.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+              <goal>fill-template</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <format>$(artifactId)__V$(version).$(type)</format>
+          <customFormats>
+            <property>
+              <name>com.google.guava:guava</name>
+              <value>$(artifactId)-$(version)-special.$(type)</value>
+            </property>
+          </customFormats>
+          <templateFormat>&lt;jar href="$(format)" size="$(size)"/></templateFormat>
+          <customTemplateFormats>
+            <property>
+              <name>de.adito.maven.test:jnlp-maven-plugin-test-one</name>
+              <value>&lt;jar href="$(format)" size="$(size)" main="true"/></value>
+            </property>
+          </customTemplateFormats>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
+</project>

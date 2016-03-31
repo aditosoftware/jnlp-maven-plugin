@@ -103,7 +103,7 @@ public class FillTemplateMojo extends AbstractJnlpMojo
     }
     catch (IOException e)
     {
-      throw new MojoExecutionException(e.getMessage(), e);
+      throw new MojoExecutionException(e.toString(), e);
     }
   }
 
@@ -125,7 +125,7 @@ public class FillTemplateMojo extends AbstractJnlpMojo
     }
     catch (IOException e)
     {
-      throw new MojoExecutionException(e.getMessage(), e);
+      throw new MojoExecutionException(e.toString(), e);
     }
   }
 
